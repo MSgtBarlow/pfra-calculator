@@ -728,18 +728,14 @@
     }
 
 
-
     function lookupTimedScore(table, actualSeconds, column) {
-  // Table must be ordered from highest score to lowest score.
-      for (let i = 1; i < table.length; i++) {
-        const nextSlowerThreshold = table[i].thresholds[column];
-
-        if (actualSeconds < nextSlowerThreshold) {
-          return table[i - 1].points;
+      for (const row of table) {
+        if (actualSeconds <= row.thresholds[column]) {
+          return row.points;
         }
       }
-
       return 0.0;
+    
     }
 
 
